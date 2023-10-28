@@ -11,7 +11,7 @@ var animated_locked : bool = false
 var direction : Vector2 = Vector2.ZERO
 var in_air : bool = false
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if !is_on_floor():
 		velocity.y += gravity
 		in_air = true
@@ -26,8 +26,10 @@ func _physics_process(delta):
 			jump()
 		
 	direction = Input.get_vector("Esquerda","Direita","Up", "s")
-	if direction:
+	if direction.x != 0:
 		velocity.x = direction.x * speed
+	elif (animated_sprite.animation == "jump_fall"):
+		velocity.x = 0
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		
